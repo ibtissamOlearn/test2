@@ -1,0 +1,32 @@
+[2023-05-05 18:12:36.605] [info]  application version = 4.0.0
+[2023-05-05 18:12:36.637] [info]  Hello, log
+[2023-05-05 18:12:36.640] [warn]  Some problem appears
+[2023-05-05 18:31:19.909] [info]  application version = 4.0.0
+[2023-05-05 18:31:19.919] [info]  Hello, log
+[2023-05-05 18:31:19.922] [warn]  Some problem appears
+[2023-05-05 18:33:44.254] [info]  application version = 4.0.0
+[2023-05-05 18:33:44.266] [info]  Hello, log
+[2023-05-05 18:33:44.623] [info]  checking-for-update
+[2023-05-05 18:33:45.697] [info]  error in auto updater HttpError: 404 
+"method: GET url: https://github.com/ibtissamOlearn/https://github.com/ibtissamOlearn/test/releases.atom\n\nPlease double check that your authentication token is correct. Due to security reasons, actual status maybe not reported, but 404.\n"
+Headers: {
+  "cache-control": "no-cache",
+  "content-encoding": "gzip",
+  "content-length": "40",
+  "content-security-policy": "default-src 'none'; base-uri 'self'; connect-src 'self'; form-action 'self'; img-src 'self' data:; script-src 'self'; style-src 'unsafe-inline'",
+  "content-type": "text/plain; charset=utf-8",
+  "date": "Fri, 05 May 2023 17:33:45 GMT",
+  "referrer-policy": "origin-when-cross-origin, strict-origin-when-cross-origin",
+  "server": "GitHub.com",
+  "strict-transport-security": "max-age=31536000; includeSubdomains; preload",
+  "vary": "X-PJAX, X-PJAX-Container, Turbo-Visit, Turbo-Frame, Accept-Encoding, Accept, X-Requested-With",
+  "x-content-type-options": "nosniff",
+  "x-frame-options": "deny",
+  "x-github-request-id": "6E9C:994A:84366B:8619ED:64553DF9",
+  "x-xss-protection": "0",
+  "set-cookie": [
+    "_gh_sess=0e3l6PRyKmv5avluolqT3QN4%2Flo6eNp3SQ%2BTFOy4x63n6ePGWUuiUwo1NF63lh391WBscZAabnD3s%2B5Ziu%2FbNHfx6Nco%2FwAISYkxkEVyhIyaLqiASVA8vuxk%2FafAfv6XfTgL1xq0fZ6nkUUAbms4ByBM7ptWqBdb1TWvB7JNKZh5F1ZT2024aDeoqjzh7qMNpvi0YHroQtJgTPepK2GkEIHZXaHtMTXTK80YSero0WupXCGPs9%2F%2FvVgkN3Xrd6tObf86PhI7C3Twzr2Pf5qztg%3D%3D--IaUuvr4wDeW8L8og--Sa15SP8kPQCSEefy%2FRKbLg%3D%3D; Path=/; HttpOnly; Secure; SameSite=Lax",
+    "_octo=GH1.1.783599681.1683308025; Path=/; Domain=github.com; Expires=Sun, 05 May 2024 17:33:45 GMT; Secure; SameSite=Lax",
+    "logged_in=no; Path=/; Domain=github.com; Expires=Sun, 05 May 2024 17:33:45 GMT; HttpOnly; Secure; SameSite=Lax"
+  ]
+}
