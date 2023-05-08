@@ -48,6 +48,23 @@ app.on('ready', function() {
     });
   });
 
+    autoUpdater.on('update-not-available',()=>{
+        log.info('update not available')
+    })
+    
+    autoUpdater.on('checking-for-update',()=>{
+        log.info('checking for update...')
+    })
+    
+    autoUpdater.on('error',(err)=>{
+        log.info('error in auto updater ' + err)
+     })
+
+    autoUpdater.on('download-progress',(progressTrack)=>{
+        log.info('download-progress')
+        log.info(progressTrack.percent())
+    })
+
   autoUpdater.on('update-downloaded', function(info) {
     const updateMessage = `A new version (${info.version}) of the app has been downloaded. Do you want to restart the app now to install the update?`;
     const buttons = ['Restart', 'Later'];
