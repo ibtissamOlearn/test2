@@ -1,7 +1,10 @@
-const { contextBridge, ipcRenderer } = require("electron");
-
-let bridge = {
-    updateMessage: (callback) => ipcRenderer.on("updateMessage", callback),
-  };
-  
-  contextBridge.exposeInMainWorld("bridge", bridge);
+mainWindow = new BrowserWindow({
+  width: 800,
+  height: 600,
+  webPreferences: {
+    nodeIntegration: false,
+    contextIsolation: true,
+    enableRemoteModule: false,
+    preload: path.join(__dirname, 'preload.js')
+  }
+});

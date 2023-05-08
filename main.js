@@ -1,58 +1,12 @@
-// const {app,BrowserWindow} = require('electron')
-// const path = require('path')
-// const {autoUpdater} = require('electron-updater')
-// const log = require('electron-log');
-// log.transports.file.resolvePath = () => path.join(__dirname, 'logs/main.log');
-// log.log("application version = " + app.getVersion())
-// log.info('Hello, log');
-// log.warn('Some problem appears');
-// let win;
-// function createWindow(){
-// win = new BrowserWindow({width:300,height:400})
+const { app, BrowserWindow, dialog } = require('electron');
+const { autoUpdater } = require('electron-updater');
 
-// win.loadFile(path.join(__dirname,'index.html'))
-// }
-
-// app.on('ready',()=>{
-//     createWindow()
-//     autoUpdater.checkForUpdatesAndNotify()
-// })
-
-
-// autoUpdater.on('update-available',()=>{
-//    log.info('update-available')
-// })
-
-// autoUpdater.on('update-not-available',()=>{
-//     log.info('update-not-available')
-//  })
-
-// autoUpdater.on('checking-for-update',()=>{
-//     log.info('checking-for-update')
-// })
-
-// autoUpdater.on('error',(err)=>{
-//     log.info('error in auto updater ' + err)
-//  })
-
-// autoUpdater.on('download-progress',(progressTrack)=>{
-//     log.info('download-progress')
-//     log.info(progressTrack)
-// })
-// autoUpdater.on('update-downloaded',(info)=>{
-//     log.info('update-downloaded')
-// })
-
-const {app,BrowserWindow} = require('electron')
-const path = require('path')
-const {autoUpdater} = require('electron-updater')
-const log = require('electron-log');
-
-log.transports.file.resolvePath = () => path.join(__dirname, 'logs/main.log');
-log.log("application version = " + app.getVersion())
-log.info('Hello, log');
-
-let win;
+let mainWindow;
+autoUpdater.setFeedURL({
+    provider: 'github',
+    owner: 'ibtissamOlearn',
+    repo: 'test2'
+});
 Object.defineProperty(app, 'isPackaged', {
     get() {
       return true;
@@ -61,47 +15,48 @@ Object.defineProperty(app, 'isPackaged', {
 
 autoUpdater.autoDownload = false ;
 autoUpdater.autoInstallOnAppQuit = true;
+  
+app.on('ready', function() {
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      enableRemoteModule: true
+    }
+  });
 
-function createWindow(){
-win = new BrowserWindow({width:300,height:400})
+  mainWindow.loadFile('index.html');
 
-win.loadFile(path.join(__dirname,'index.html'))
-}
+  mainWindow.webContents.on('did-finish-load', function() {
+    const appVersion = app.getVersion();
+    mainWindow.webContents.send('app-version', appVersion);
 
+    autoUpdater.checkForUpdatesAndNotify();
+  });
 
-app.on('ready',()=>{
-    createWindow()
-    autoUpdater.checkForUpdates()
-    win.webContents.send("updateMessage",`Checking for updates. Current version ${app.getVersion()}`)
-})
+  autoUpdater.on('update-available', function(info) {
+    const updateMessage = `A new version (${info.version}) of the app is available. Do you want to download and install it now?`;
+    const buttons = ['Download', 'Later'];
+    const options = { type: 'question', buttons: buttons, defaultId: 0, title: 'Update Available', message: updateMessage };
 
+    dialog.showMessageBox(mainWindow, options).then(function({ response }) {
+      if (response === 0) {
+        autoUpdater.downloadUpdate();
+      }
+    });
+  });
 
-autoUpdater.on('update-available',()=>{
-   log.info('update-available')
-   win.webContents.send("updateMessage",`Update available. Current version ${app.getVersion()}`);
-})
+  autoUpdater.on('update-downloaded', function(info) {
+    const updateMessage = `A new version (${info.version}) of the app has been downloaded. Do you want to restart the app now to install the update?`;
+    const buttons = ['Restart', 'Later'];
+    const options = { type: 'question', buttons: buttons, defaultId: 0, title: 'Update Downloaded', message: updateMessage };
 
-autoUpdater.on('update-not-available',()=>{
-    log.info('update-not-available')
-    win.webContents.send("updateMessage",`No update available. Current version ${app.getVersion()}`);
- })
-
-autoUpdater.on('checking-for-update',()=>{
-    log.info('checking-for-update')
-    win.webContents.send("updateMessage",`Checking for update. Current version ${app.getVersion()}`);
-})
-
-autoUpdater.on('error',(err)=>{
-    log.info('error in auto updater ' + err)
-    win.webContents.send("updateMessage",err);
- })
-
-autoUpdater.on('download-progress',(progressTrack)=>{
-    log.info('download-progress')
-    log.info(progressTrack)
-    win.webContents.send("updateMessage",`Downald in progress. Current version ${app.getVersion()}` + progressTrack.percent());
-})
-autoUpdater.on('update-downloaded',(info)=>{
-    log.info('update-downloaded')
-    win.webContents.send("updateMessage",`Update downloaded. Current version ${app.getVersion()}`);
-})
+    dialog.showMessageBox(mainWindow, options).then(function({ response }) {
+      if (response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
+  });
+});

@@ -1,6 +1,6 @@
 {
   "name": "test",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "scripts": {
     "ng": "ng",
     "start": "electron .",
@@ -14,8 +14,6 @@
       "publish": [
         {
           "provider": "github",
-          "owner": "ibtissamOlearn",
-          "repo": "https://github.com/ibtissamOlearn/test.git",
           "releaseType": "release"
         }
       ]
@@ -52,10 +50,6 @@
   },
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.",
   "main": "main.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ibtissamOlearn/test.git"
-  },
   "author": "ibtissaOlearn",
   "license": "ISC",
   "bugs": {
